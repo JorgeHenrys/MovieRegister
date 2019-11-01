@@ -2,11 +2,11 @@ package henrys.com.br.MovieRegister;
 
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-import java.util.List;
-
+//import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -25,7 +25,7 @@ public class RegisterFrame extends JFrame{
 	
 	private MovieDAO doc = new MovieDAO();
 	
-	Font font = new Font ("Arial Black", Font.BOLD, 20);
+	Font font = new Font ("Courier", Font.ITALIC, 15);
 	
 	private void btnExitActionPerformed() {
 		int confirm = JOptionPane.showConfirmDialog(this,
@@ -53,6 +53,7 @@ public class RegisterFrame extends JFrame{
 				);
 	}
 	
+	/*	
 	private String viewAux() {
 		List<Movie> jj = doc.recoversMovie();
 		String movies = "";
@@ -68,6 +69,7 @@ public class RegisterFrame extends JFrame{
 				"View Records",
 				JOptionPane.PLAIN_MESSAGE);
 	}
+	*/
 	
 	public RegisterFrame() {
 		
@@ -165,7 +167,15 @@ public class RegisterFrame extends JFrame{
 		
 		btnView.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent event) {
-				btnViewActionPerformed();
+				try {
+					FrameTable frame = new FrameTable();
+					frame.setVisible(true);
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				} catch (HeadlessException e) {
+					e.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		});
 		

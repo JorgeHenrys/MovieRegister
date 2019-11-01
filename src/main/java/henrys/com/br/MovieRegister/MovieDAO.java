@@ -51,25 +51,32 @@ public class MovieDAO {
 		
 	}
 	
-	public List<Movie> recoversMovie() {
+	public List<Movie> recoversMovie() throws SQLException{
 		
-		try {
-			List<Movie> list = new ArrayList<Movie>();
-			String sql = "select * from movies";
-			stmt = conn.prepareStatement(sql);
-			ResultSet res = stmt.executeQuery();
+		
+		List<Movie> list = new ArrayList<Movie>();
+		String sql = "select * from movies";
+		stmt = conn.prepareStatement(sql);
+		ResultSet res = stmt.executeQuery();
 			
-			while(res.next()) {
-				list.add(new Movie(res.getString("title"), res.getString("yearr"), res.getString("genre"), res.getInt("id")));
-			}
-			
-			return list;
-			
-		}catch(SQLException exp) {
-			exp.printStackTrace();
+		while(res.next()) {
+			list.add(new Movie(res.getString("title"), res.getString("yearr"), res.getString("genre"), res.getInt("id")));
+		
 		}
+		return list;
 		
-		return null;
+		
+	}
+	
+	public void updateMovie(Movie m) throws SQLException{
+		String sql = "update docente set titulo = ?, yearr = ?, genre = ?, where id = ?";
+		stmt = conn.prepareStatement(sql);
+		stmt.setString(1, m.getTitle());
+		stmt.setString(2, m.getYear());
+		stmt.setString(3, m.getGenre());
+		stmt.setInt(4, m.getId());
+		stmt.execute();
+		stmt.close();
 	}
 	
 }
